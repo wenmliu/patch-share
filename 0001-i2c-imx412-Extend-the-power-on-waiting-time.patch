@@ -1,7 +1,7 @@
 From 932382e42beb4033b48cd774942ad1c86d27aee8 Mon Sep 17 00:00:00 2001
 From: Wenmeng Liu <quic_wenmliu@quicinc.com>
 Date: Tue, 18 Nov 2025 16:06:31 +0800
-Subject: [PATCH 1/5] i2c: imx412: Extend the power-on waiting time
+Subject: [PATCH] i2c: imx412: Extend the power-on waiting time
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
