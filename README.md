@@ -1,1 +1,1 @@
-This changes is for CSI1 IMX577 only.
+This changes is for Talos EVK DVT CSI1 IMX577 only.
