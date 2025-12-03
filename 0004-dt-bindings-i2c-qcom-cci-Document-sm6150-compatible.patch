@@ -1,0 +1,52 @@
+From 4a7bccca578579065800d189b6bac469025f5f48 Mon Sep 17 00:00:00 2001
+From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+Date: Wed, 3 Dec 2025 12:37:01 +0800
+Subject: [PATCH 4/6] dt-bindings: i2c: qcom-cci: Document sm6150 compatible
+
+Add the sm6150 CCI device string compatible.
+
+Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+---
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
+index 33852a5ffca8..d1362e963614 100644
+--- a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
++++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
+@@ -33,6 +33,7 @@ properties:
+               - qcom,sc8280xp-cci
+               - qcom,sdm670-cci
+               - qcom,sdm845-cci
++              - qcom,sm6150-cci
+               - qcom,sm6350-cci
+               - qcom,sm8250-cci
+               - qcom,sm8450-cci
+@@ -261,6 +262,24 @@ allOf:
+             - const: cpas_ahb
+             - const: cci
+ 
++ - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sm6150-cci
++    then:
++      properties:
++        clocks:
++          minItems: 3
++          maxItems: 3
++        clock-names:
++          items:
++            - const: soc_ahb
++            - const: cpas_ahb
++            - const: cci
++
++
+ additionalProperties: false
+ 
+ examples:
+-- 
+2.34.1
+

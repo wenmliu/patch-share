@@ -1,0 +1,109 @@
+From d61ee61ef5c83f39416120b4f5847a676732e6b6 Mon Sep 17 00:00:00 2001
+From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+Date: Wed, 3 Dec 2025 10:54:35 +0800
+Subject: [PATCH 5/6] arm64: dts: qcom: talos: Add CCI definitions
+
+Qualcomm Talos SoC contains 1 Camera Control Interface controllers.
+
+Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+---
+ arch/arm64/boot/dts/qcom/talos.dtsi | 76 +++++++++++++++++++++++++++++
+ 1 file changed, 76 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/talos.dtsi b/arch/arm64/boot/dts/qcom/talos.dtsi
+index a7a26bce4669..90cf41367c14 100644
+--- a/arch/arm64/boot/dts/qcom/talos.dtsi
++++ b/arch/arm64/boot/dts/qcom/talos.dtsi
+@@ -1549,6 +1549,46 @@ tlmm: pinctrl@3100000 {
+ 			#interrupt-cells = <2>;
+ 			wakeup-parent = <&pdc>;
+ 
++			cci_default: cci0-default-state {
++				cci_i2c0_default: cci-i2c0-default-pins {
++					/* SDA, SCL */
++					pins = "gpio32", "gpio33";
++					function = "cci_i2c";
++
++					bias-pull-up;
++					drive-strength = <2>;
++				};
++
++				cci_i2c1_default: cci-i2c1-default-pins {
++					/* SDA, SCL */
++					pins = "gpio34", "gpio35";
++					function = "cci_i2c";
++
++					bias-pull-up;
++					drive-strength = <2>;
++				};
++			};
++
++			cci_sleep: cci-sleep-state {
++				cci_i2c0_sleep: cci-i2c0-sleep-state {
++					/* SDA, SCL */
++					pins = "gpio32", "gpio33";
++					function = "cci_i2c";
++
++					bias-pull-down;
++					drive-strength = <2>;
++				};
++
++				cci_i2c1_sleep: cci-i2c1-sleep-state {
++					/* SDA, SCL */
++					pins = "gpio34", "gpio35";
++					function = "cci_i2c";
++
++					bias-pull-down;
++					drive-strength = <2>;
++				};
++			};
++
+ 			qup_i2c1_data_clk: qup-i2c1-data-clk-state {
+ 				pins = "gpio4", "gpio5";
+ 				function = "qup0";
+@@ -3785,6 +3825,42 @@ videocc: clock-controller@ab00000 {
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		cci: cci@ac4a000 {
++			compatible = "qcom,sm6150-cci", "qcom,msm8996-cci";
++
++			reg = <0x0 0x0ac4a000  0x0 0x4000>;
++			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
++			power-domains = <&camcc TITAN_TOP_GDSC>;
++			clocks = <&camcc CAM_CC_SOC_AHB_CLK>,
++				 <&camcc CAM_CC_CPAS_AHB_CLK>,
++				 <&camcc CAM_CC_CCI_CLK>;
++			clock-names = "soc_ahb",
++				      "cpas_ahb",
++				      "cci";
++			pinctrl-0 = <&cci_default>;
++			pinctrl-1 = <&cci_sleep>;
++			pinctrl-names = "default", "sleep";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			status = "disabled";
++
++			cci_i2c0: i2c-bus@0 {
++				reg = <0>;
++				clock-frequency = <1000000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++
++			cci_i2c1: i2c-bus@1 {
++				reg = <1>;
++				clock-frequency = <1000000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++		};
++
+ 		camss: isp@acb3000 {
+ 			compatible = "qcom,sm6150-camss";
+ 
+-- 
+2.34.1
+
