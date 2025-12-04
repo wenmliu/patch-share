@@ -1,4 +1,4 @@
-From 932382e42beb4033b48cd774942ad1c86d27aee8 Mon Sep 17 00:00:00 2001
+From ec7d82feb88bd4426522a90e7257b096543ccc6a Mon Sep 17 00:00:00 2001
 From: Wenmeng Liu <quic_wenmliu@quicinc.com>
 Date: Tue, 18 Nov 2025 16:06:31 +0800
 Subject: [PATCH] i2c: imx412: Extend the power-on waiting time
@@ -12,13 +12,31 @@ to ensure proper initialization.
 
 Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
 ---
- drivers/media/i2c/imx412.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/imx412.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/media/i2c/imx412.c b/drivers/media/i2c/imx412.c
-index 7bbd639a9ddf..459cca36493e 100644
+index b3826f803547..dbd4935a0db3 100644
 --- a/drivers/media/i2c/imx412.c
 +++ b/drivers/media/i2c/imx412.c
+@@ -51,7 +51,7 @@
+ 
+ /* CSI2 HW configuration */
+ #define IMX412_LINK_FREQ	600000000
+-#define IMX412_NUM_DATA_LANES	4
++#define IMX412_NUM_DATA_LANES	2
+ 
+ #define IMX412_REG_MIN		0x00
+ #define IMX412_REG_MAX		0xffff
+@@ -270,7 +270,7 @@ static const struct imx412_reg mode_4056x3040_regs[] = {
+ 	{0x5078, 0x01},
+ 	{0x0112, 0x0a},
+ 	{0x0113, 0x0a},
+-	{0x0114, 0x03},
++	{0x0114, 0x01},
+ 	{0x0342, 0x11},
+ 	{0x0343, 0xa0},
+ 	{0x0340, 0x0d},
 @@ -1037,7 +1037,7 @@ static int imx412_power_on(struct device *dev)
  		goto error_reset;
  	}
